@@ -926,12 +926,9 @@ function showResult() {
 
   var params = new URLSearchParams(payload).toString();
   var url = 'https://script.google.com/macros/s/AKfycbygyBzRtjAwWeLQo4TR9VJ07daTENVlRrFgqBoky2H9TDryoSMRuuLGKM8NLLwpjetq4w/exec?' + params;
-  fetch(url, { method: 'GET', mode: 'no-cors' })
-    .then(function() {
-      console.log('Lead enviado para Google Sheets com sucesso');
-    }).catch(function(err) {
-      console.log('Erro ao enviar lead:', err);
-    });
+  var img = new Image();
+  img.src = url;
+  console.log('Lead enviado:', url);
 }
 
 document.addEventListener('DOMContentLoaded', function() {
