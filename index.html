@@ -924,16 +924,14 @@ function showResult() {
     dor: answers.q6
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbygyBzRtjAwWeLQo4TR9VJ07daTENVlRrFgqBoky2H9TDryoSMRuuLGKM8NLLwpjetq4w/exec', {
-    method: 'POST',
-    mode: 'no-cors',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(payload)
-  }).then(function() {
-    console.log('Lead enviado para Google Sheets com sucesso');
-  }).catch(function(err) {
-    console.log('Erro ao enviar lead:', err);
-  });
+  var params = new URLSearchParams(payload).toString();
+  var url = 'https://script.google.com/macros/s/AKfycbygyBzRtjAwWeLQo4TR9VJ07daTENVlRrFgqBoky2H9TDryoSMRuuLGKM8NLLwpjetq4w/exec?' + params;
+  fetch(url, { method: 'GET', mode: 'no-cors' })
+    .then(function() {
+      console.log('Lead enviado para Google Sheets com sucesso');
+    }).catch(function(err) {
+      console.log('Erro ao enviar lead:', err);
+    });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
