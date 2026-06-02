@@ -906,6 +906,34 @@ function showResult() {
   document.getElementById('waBtn').href = `https://wa.me/5584998428598?text=${msg}`;
   window.scrollTo({ top: 0, behavior: 'smooth' });
   console.log('Respostas completas:', answers, 'Scores:', scores);
+
+  var payload = {
+    nome: c.nome,
+    empresa: c.empresa,
+    whatsapp: c.whatsapp,
+    setor: c.setor || '',
+    faturamento: c.faturamento || '',
+    pagamentos: getStatusLabel(getStatus(scores.pagamentos)),
+    conciliacao: getStatusLabel(getStatus(scores.conciliacao)),
+    fluxo: getStatusLabel(getStatus(scores.fluxo)),
+    relatorios: getStatusLabel(getStatus(scores.relatorios)),
+    score_pagamentos: scores.pagamentos,
+    score_conciliacao: scores.conciliacao,
+    score_fluxo: scores.fluxo,
+    score_relatorios: scores.relatorios,
+    dor: answers.q6
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbygyBzRtjAwWeLQo4TR9VJ07daTENVlRrFgqBoky2H9TDryoSMRuuLGKM8NLLwpjetq4w/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload)
+  }).then(function() {
+    console.log('Lead enviado para Google Sheets com sucesso');
+  }).catch(function(err) {
+    console.log('Erro ao enviar lead:', err);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', function() {
