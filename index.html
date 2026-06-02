@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raio-X Financeiro | Basilio Assessoria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0d1b3e;
+  --navy-mid: #142244;
+  --navy-light: #1e3261;
+  --gold: #c9a84c;
+  --gold-light: #e2c47a;
+  --gold-dim: #9a7a35;
+  --white: #ffffff;
+  --muted: rgba(255,255,255,0.55);
+  --body: rgba(255,255,255,0.85);
+  --red: #e05252;
+  --yellow: #e0b452;
+  --green: #52c97a;
+}
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem 4rem;
+}
+
+/* HEADER */
+.brand {
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 0 2.5rem;
+  border-bottom: 1px solid rgba(201,168,76,0.15);
+  margin-bottom: 3rem;
+}
+.brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+.brand-tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* INTRO */
+.intro {
+  width: 100%;
+  max-width: 760px;
+  margin-bottom: 3rem;
+}
+.intro-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.75rem;
+}
+.intro h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.9rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+.intro h1 em { font-style: italic; color: var(--gold); }
+.intro p {
+  font-size: 0.95rem;
+  color: var(--body);
+  line-height: 1.8;
+  max-width: 560px;
+}
+.divider { width: 40px; height: 1px; background: var(--gold); margin: 1.25rem 0; }
+
+/* PROGRESS */
+.progress-wrap {
+  width: 100%;
+  max-width: 760px;
+  margin-bottom: 2.5rem;
+}
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+.progress-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.progress-count {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+.progress-bar {
+  width: 100%;
+  height: 2px;
+  background: rgba(201,168,76,0.15);
+  position: relative;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--gold);
+  transition: width 0.5s ease;
+  width: 0%;
+}
+
+/* CARD */
+.card {
+  width: 100%;
+  max-width: 760px;
+  background: rgba(13,27,62,0.6);
+  border: 1px solid rgba(201,168,76,0.22);
+  padding: 2.5rem 3rem;
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 2.5rem; right: 2.5rem;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+/* QUESTION */
+.q-area {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-dim);
+  margin-bottom: 0.5rem;
+}
+.q-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+.q-hint {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-bottom: 1.75rem;
+  line-height: 1.6;
+}
+
+/* OPTIONS */
+.options { display: flex; flex-direction: column; gap: 0.65rem; }
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(201,168,76,0.18);
+  cursor: pointer;
+  transition: all 0.22s;
+  position: relative;
+}
+.opt:hover { border-color: rgba(201,168,76,0.5); background: rgba(201,168,76,0.04); }
+.opt.selected { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+
+.opt-letter {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--gold-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--gold-dim);
+  transition: all 0.22s;
+  margin-top: 1px;
+}
+.opt.selected .opt-letter {
+  background: var(--gold);
+  color: var(--navy);
+  border-color: var(--gold);
+}
+.opt-body { flex: 1; }
+.opt-main { font-size: 0.92rem; color: var(--white); line-height: 1.4; margin-bottom: 0.2rem; }
+.opt-sub { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+
+/* SCORE BADGE */
+.score-pill {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.6rem;
+  margin-left: auto;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.score-pill.crítico { background: rgba(224,82,82,0.15); color: #e05252; border: 1px solid rgba(224,82,82,0.3); }
+.score-pill.alerta { background: rgba(224,180,82,0.15); color: #e0b452; border: 1px solid rgba(224,180,82,0.3); }
+.score-pill.bom { background: rgba(82,201,122,0.15); color: #52c97a; border: 1px solid rgba(82,201,122,0.3); }
+
+/* TEXTO LIVRE */
+.text-area {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.22);
+  color: var(--white);
+  padding: 1rem 1.25rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.92rem;
+  outline: none;
+  resize: vertical;
+  min-height: 90px;
+  transition: border-color 0.3s;
+  line-height: 1.6;
+}
+.text-area::placeholder { color: rgba(255,255,255,0.28); }
+.text-area:focus { border-color: var(--gold); }
+.field-input, .field-select {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(201,168,76,0.22);
+  color: var(--white);
+  padding: 0.9rem 1.1rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.3s;
+  appearance: none;
+  margin-bottom: 1rem;
+}
+.field-input::placeholder { color: rgba(255,255,255,0.28); }
+.field-input:focus, .field-select:focus { border-color: var(--gold); }
+.field-select option { background: var(--navy); }
+.field-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+
+/* NAV BUTTONS */
+.nav-row {
+  width: 100%;
+  max-width: 760px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+.btn-back {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.18);
+  color: var(--muted);
+  padding: 0.75rem 1.5rem;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-back:hover { border-color: var(--white); color: var(--white); }
+.btn-next {
+  background: var(--gold);
+  color: var(--navy);
+  padding: 0.85rem 2.25rem;
+  border: none;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.btn-next:hover { background: var(--gold-light); }
+.btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* TELA CONTATO */
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+@media(max-width:560px){ .contact-grid { grid-template-columns: 1fr; } }
+
+/* TELA FINAL */
+.final-screen {
+  width: 100%;
+  max-width: 760px;
+  display: none;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+.final-screen.active { display: block; }
+.final-icon {
+  width: 72px; height: 72px;
+  border: 1px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 2rem;
+  font-size: 1.8rem;
+}
+.final-screen h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.final-screen p { color: var(--body); max-width: 480px; margin: 0 auto 1rem; line-height: 1.8; }
+.result-areas {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 1rem;
+  margin: 2.5rem 0;
+  text-align: left;
+}
+@media(max-width:560px){ .result-areas { grid-template-columns: 1fr; } }
+.area-card {
+  border: 1px solid rgba(201,168,76,0.2);
+  padding: 1.25rem 1.5rem;
+}
+.area-card-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+.area-card-status {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.area-card-status.crítico { color: var(--red); }
+.area-card-status.alerta { color: var(--yellow); }
+.area-card-status.bom { color: var(--green); }
+.area-card-bar { margin-top: 0.6rem; height: 3px; background: rgba(255,255,255,0.1); }
+.area-card-fill { height: 100%; transition: width 0.8s ease; }
+.area-card-fill.crítico { background: var(--red); }
+.area-card-fill.alerta { background: var(--yellow); }
+.area-card-fill.bom { background: var(--green); }
+.whatsapp-btn {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  background: #25d366; color: #fff;
+  padding: 0.9rem 2rem;
+  font-family: 'Jost', sans-serif; font-size: 0.88rem; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer; border: none;
+  transition: all 0.3s; margin-top: 0.5rem;
+}
+.whatsapp-btn:hover { background: #1eb857; transform: translateY(-2px); }
+
+/* HIDDEN */
+.screen { display: none; }
+.screen.active { display: block; }
+
+.hero-visual {
+  margin-top: 3rem;
+  border: 1px solid rgba(201,168,76,0.25);
+  padding: 2rem 2rem 1.5rem;
+  position: relative;
+  background: rgba(201,168,76,0.03);
+  overflow: hidden;
+}
+.hero-visual::before {
+  content: 'RAIO-X FINANCEIRO · BASILIO ASSESSORIA';
+  position: absolute;
+  top: 0.6rem; right: 1rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  color: rgba(201,168,76,0.35);
+  font-weight: 600;
+}
+.hero-visual::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+.visual-scan-line {
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(201,168,76,0.04), transparent);
+  animation: scan 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes scan {
+  0% { left: -60%; }
+  100% { left: 110%; }
+}
+.visual-areas { display: flex; flex-direction: column; gap: 1.1rem; }
+.va { display: grid; grid-template-columns: 130px 1fr 70px; align-items: center; gap: 1rem; }
+.va-label { font-size: 0.78rem; letter-spacing: 0.06em; color: var(--muted); }
+.va-bar { height: 4px; background: rgba(255,255,255,0.08); position: relative; }
+.va-fill { height: 100%; background: var(--gold); opacity: 0; transition: width 1.2s ease, opacity 0.4s; }
+.va-fill.visible { opacity: 1; }
+.va-pagamentos .va-fill { background: #e05252; }
+.va-conciliacao .va-fill { background: #e0b452; }
+.va-fluxo .va-fill { background: #e05252; }
+.va-dre .va-fill { background: #52c97a; }
+.va-status { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; text-align: right; }
+.va-status.crítico { color: #e05252; }
+.va-status.alerta { color: #e0b452; }
+.va-status.bom { color: #52c97a; }
+.visual-caption {
+  margin-top: 1.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(201,168,76,0.4);
+  text-align: center;
+}
+@media(max-width:560px){
+  .va { grid-template-columns: 100px 1fr 60px; gap: 0.6rem; }
+  .va-label { font-size: 0.72rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="brand">
+  <div class="brand-name">Basilio <span style="color:rgba(255,255,255,0.5);font-weight:400">· Assessoria Financeira</span></div>
+  <div class="brand-tag">Raio-X Financeiro</div>
+</div>
+
+<!-- INTRO -->
+<div class="intro" id="introBlock">
+  <span class="intro-label">Diagnóstico gratuito</span>
+  <h1>Descubra onde está o <em>gargalo</em><br>do seu financeiro.</h1>
+  <div class="divider"></div>
+  <p>7 perguntas. 4 minutos. Você vai receber um resumo personalizado por WhatsApp e um convite para conversar sobre como resolver cada ponto identificado.</p>
+  <br>
+  <button class="btn-next" onclick="startForm()" style="margin-top:0.5rem;">Começar diagnóstico →</button>
+
+  <div class="hero-visual">
+    <div class="visual-areas">
+      <div class="va va-pagamentos">
+        <div class="va-label">Pagamentos</div>
+        <div class="va-bar"><div class="va-fill" style="width:30%"></div></div>
+        <div class="va-status crítico">Crítico</div>
+      </div>
+      <div class="va va-conciliacao">
+        <div class="va-label">Conciliação</div>
+        <div class="va-bar"><div class="va-fill" style="width:55%"></div></div>
+        <div class="va-status alerta">Alerta</div>
+      </div>
+      <div class="va va-fluxo">
+        <div class="va-label">Fluxo de Caixa</div>
+        <div class="va-bar"><div class="va-fill" style="width:20%"></div></div>
+        <div class="va-status crítico">Crítico</div>
+      </div>
+      <div class="va va-dre">
+        <div class="va-label">DRE / Relatórios</div>
+        <div class="va-bar"><div class="va-fill" style="width:80%"></div></div>
+        <div class="va-status bom">Bom</div>
+      </div>
+    </div>
+    <div class="visual-caption">Exemplo de raio-x gerado após o diagnóstico</div>
+    <div class="visual-scan-line"></div>
+  </div>
+</div>
+
+<!-- FORMULÁRIO -->
+<div id="formBlock" style="display:none; width:100%; max-width:760px; flex-direction:column; align-items:center;">
+
+  <div class="progress-wrap">
+    <div class="progress-meta">
+      <span class="progress-label" id="progressLabel">Pergunta 1 de 7</span>
+      <span class="progress-count" id="progressCount">1 / 7</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <!-- Q1: Pagamentos -->
+  <div class="card screen active" id="q1">
+    <div class="q-area">💳 Pagamentos & Contas a Pagar</div>
+    <div class="q-text">Como sua empresa gerencia o pagamento de fornecedores e contas?</div>
+    <div class="q-hint">Considere o processo do dia a dia: quem paga, quando, como é decidida a prioridade.</div>
+    <div class="options" id="opts1">
+      <div class="opt" onclick="selectOpt(this,1,'a',3,'bom')">
+        <div class="opt-letter">A</div>
+        <div class="opt-body">
+          <div class="opt-main">Temos um calendário fixo de pagamentos com aprovações definidas</div>
+          <div class="opt-sub">Fluxo estruturado, quase nenhum atraso</div>
+        </div>
+        <span class="score-pill bom">Bom</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,1,'b',2,'alerta')">
+        <div class="opt-letter">B</div>
+        <div class="opt-body">
+          <div class="opt-main">Pagamos conforme as contas chegam, sem calendário fixo</div>
+          <div class="opt-sub">Funciona, mas às vezes perdemos prazos</div>
+        </div>
+        <span class="score-pill alerta">Alerta</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,1,'c',1,'crítico')">
+        <div class="opt-letter">C</div>
+        <div class="opt-body">
+          <div class="opt-main">Pagamentos feitos quando o dono/gerente lembra ou quando o fornecedor cobra</div>
+          <div class="opt-sub">Já pagamos juros por atraso mais de uma vez</div>
+        </div>
+        <span class="score-pill crítico">Crítico</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,1,'d',1,'crítico')">
+        <div class="opt-letter">D</div>
+        <div class="opt-body">
+          <div class="opt-main">Não temos processo definido — cada área resolve por conta própria</div>
+          <div class="opt-sub">Falta centralização e visibilidade total</div>
+        </div>
+        <span class="score-pill crítico">Crítico</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q2: Conciliação -->
+  <div class="card screen" id="q2">
+    <div class="q-area">🏦 Conciliação Bancária</div>
+    <div class="q-text">Com que frequência sua empresa concilia os extratos bancários com o sistema financeiro?</div>
+    <div class="q-hint">Conciliação é confirmar que o que está no banco bate com o que está nos registros internos.</div>
+    <div class="options" id="opts2">
+      <div class="opt" onclick="selectOpt(this,2,'a',3,'bom')">
+        <div class="opt-letter">A</div>
+        <div class="opt-body">
+          <div class="opt-main">Diária ou semanal, de forma automatizada ou por processo claro</div>
+          <div class="opt-sub">Raramente encontramos divergências</div>
+        </div>
+        <span class="score-pill bom">Bom</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,2,'b',2,'alerta')">
+        <div class="opt-letter">B</div>
+        <div class="opt-body">
+          <div class="opt-main">Mensalmente, antes de fechar o mês</div>
+          <div class="opt-sub">Às vezes encontramos diferenças e levamos tempo para resolver</div>
+        </div>
+        <span class="score-pill alerta">Alerta</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,2,'c',1,'crítico')">
+        <div class="opt-letter">C</div>
+        <div class="opt-body">
+          <div class="opt-main">Raramente — só quando algo está errado e precisamos investigar</div>
+          <div class="opt-sub">Nunca temos certeza se os números batem</div>
+        </div>
+        <span class="score-pill crítico">Crítico</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,2,'d',1,'crítico')">
+        <div class="opt-letter">D</div>
+        <div class="opt-body">
+          <div class="opt-main">Não fazemos conciliação bancária formalmente</div>
+          <div class="opt-sub">Confiamos no extrato do banco diretamente</div>
+        </div>
+        <span class="score-pill crítico">Crítico</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q3: Fluxo de caixa -->
+  <div class="card screen" id="q3">
+    <div class="q-area">📊 Fluxo de Caixa & Projeção</div>
+    <div class="q-text">Você sabe hoje quanto dinheiro vai entrar e sair da empresa nos próximos 30 dias?</div>
+    <div class="q-hint">Estamos falando de visibilidade projetada — não só o saldo atual, mas o que está por vir.</div>
+    <div class="options" id="opts3">
+      <div class="opt" onclick="selectOpt(this,3,'a',3,'bom')">
+        <div class="opt-letter">A</div>
+        <div class="opt-body">
+          <div class="opt-main">Sim, temos projeção atualizada e acompanhamos semanalmente</div>
+          <div class="opt-sub">Tomamos decisões baseados no fluxo projetado</div>
+        </div>
+        <span class="score-pill bom">Bom</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,3,'b',2,'alerta')">
+        <div class="opt-letter">B</div>
+        <div class="opt-body">
+          <div class="opt-main">Temos uma noção aproximada, mas não é formalizado</div>
+          <div class="opt-sub">Gerenciamos mais na intuição do que em dados</div>
+        </div>
+        <span class="score-pill alerta">Alerta</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,3,'c',1,'crítico')">
+        <div class="opt-letter">C</div>
+        <div class="opt-body">
+          <div class="opt-main">Só sabemos o saldo atual — sem projeção dos próximos dias</div>
+          <div class="opt-sub">Já ficamos sem caixa de forma inesperada</div>
+        </div>
+        <span class="score-pill crítico">Crítico</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,3,'d',1,'crítico')">
+        <div class="opt-letter">D</div>
+        <div class="opt-body">
+          <div class="opt-main">Não controlamos o fluxo de caixa formalmente</div>
+          <div class="opt-sub">As decisões financeiras são tomadas sem projeção</div>
+        </div>
+        <span class="score-pill crítico">Crítico</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q4: DRE / Relatórios -->
+  <div class="card screen" id="q4">
+    <div class="q-area">📋 Relatórios & DRE</div>
+    <div class="q-text">Sua empresa tem um DRE (Demonstrativo de Resultado) atualizado mensalmente?</div>
+    <div class="q-hint">O DRE mostra receitas, custos e lucro real — diferente do saldo bancário.</div>
+    <div class="options" id="opts4">
+      <div class="opt" onclick="selectOpt(this,4,'a',3,'bom')">
+        <div class="opt-letter">A</div>
+        <div class="opt-body">
+          <div class="opt-main">Sim, temos DRE mensal e reunião de resultado com os sócios</div>
+          <div class="opt-sub">Tomamos decisões com base nos números reais do negócio</div>
+        </div>
+        <span class="score-pill bom">Bom</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,4,'b',2,'alerta')">
+        <div class="opt-letter">B</div>
+        <div class="opt-body">
+          <div class="opt-main">Temos alguns relatórios, mas não um DRE formal e completo</div>
+          <div class="opt-sub">Os números existem mas não são apresentados de forma organizada</div>
+        </div>
+        <span class="score-pill alerta">Alerta</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,4,'c',1,'crítico')">
+        <div class="opt-letter">C</div>
+        <div class="opt-body">
+          <div class="opt-main">Só sabemos o resultado quando fazemos o balanço anual com o contador</div>
+          <div class="opt-sub">Meses se passam sem saber se a empresa está lucrando de verdade</div>
+        </div>
+        <span class="score-pill crítico">Crítico</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,4,'d',1,'crítico')">
+        <div class="opt-letter">D</div>
+        <div class="opt-body">
+          <div class="opt-main">Não temos relatórios financeiros gerenciais</div>
+          <div class="opt-sub">Gerenciamos pelo saldo bancário e sensação de vendas</div>
+        </div>
+        <span class="score-pill crítico">Crítico</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q5: Equipe e processos -->
+  <div class="card screen" id="q5">
+    <div class="q-area">👥 Equipe & Processos Internos</div>
+    <div class="q-text">Como está a operação financeira interna da sua empresa hoje?</div>
+    <div class="q-hint">Quem cuida do financeiro, como estão organizados e qual o nível de dependência de uma pessoa só.</div>
+    <div class="options" id="opts5">
+      <div class="opt" onclick="selectOpt(this,5,'a',3,'bom')">
+        <div class="opt-letter">A</div>
+        <div class="opt-body">
+          <div class="opt-main">Temos equipe dedicada com processos documentados</div>
+          <div class="opt-sub">A operação não depende de uma pessoa só</div>
+        </div>
+        <span class="score-pill bom">Bom</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,5,'b',2,'alerta')">
+        <div class="opt-letter">B</div>
+        <div class="opt-body">
+          <div class="opt-main">Uma pessoa cuida de tudo, mas está sobrecarregada com outras funções</div>
+          <div class="opt-sub">Há risco de gargalo se essa pessoa sair ou faltar</div>
+        </div>
+        <span class="score-pill alerta">Alerta</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,5,'c',1,'crítico')">
+        <div class="opt-letter">C</div>
+        <div class="opt-body">
+          <div class="opt-main">O sócio/dono cuida do financeiro além de outras responsabilidades</div>
+          <div class="opt-sub">Tempo do sócio consumido em rotina operacional</div>
+        </div>
+        <span class="score-pill crítico">Crítico</span>
+      </div>
+      <div class="opt" onclick="selectOpt(this,5,'d',1,'crítico')">
+        <div class="opt-letter">D</div>
+        <div class="opt-body">
+          <div class="opt-main">Não há responsável claro — cada área resolve o seu financeiro</div>
+          <div class="opt-sub">Falta centralização, governança e visão do todo</div>
+        </div>
+        <span class="score-pill crítico">Crítico</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q6: Contexto livre -->
+  <div class="card screen" id="q6">
+    <div class="q-area">🎯 Contexto</div>
+    <div class="q-text">Em uma frase, qual é a maior dor financeira da sua empresa hoje?</div>
+    <div class="q-hint">Seja direto. Isso vai nos ajudar a preparar algo realmente útil para você.</div>
+    <textarea class="text-area" id="dor_livre" placeholder="Ex: não sei se estou lucrando de verdade, o caixa sempre aperta no final do mês, meu financeiro depende só de mim..."></textarea>
+  </div>
+
+  <!-- Q7: Contato -->
+  <div class="card screen" id="q7">
+    <div class="q-area">📱 Último passo</div>
+    <div class="q-text">Para onde enviamos seu diagnóstico?</div>
+    <div class="q-hint">Você receberá um resumo personalizado por WhatsApp com os pontos de atenção e um convite para conversar.</div>
+    <div class="contact-grid">
+      <div>
+        <label class="field-label">Nome completo</label>
+        <input type="text" class="field-input" id="nome" placeholder="Seu nome">
+      </div>
+      <div>
+        <label class="field-label">Empresa</label>
+        <input type="text" class="field-input" id="empresa" placeholder="Nome da empresa">
+      </div>
+    </div>
+    <label class="field-label">WhatsApp</label>
+    <input type="tel" class="field-input" id="whatsapp" placeholder="(XX) 9 XXXX-XXXX">
+    <label class="field-label">Setor de atuação</label>
+    <select class="field-select" id="setor">
+      <option value="" disabled selected>Selecione</option>
+      <option>Comércio / Varejo</option>
+      <option>Serviços B2B</option>
+      <option>Saúde / Clínicas</option>
+      <option>Construção / Imobiliário</option>
+      <option>Indústria</option>
+      <option>Educação</option>
+      <option>Outro</option>
+    </select>
+    <label class="field-label">Faturamento mensal médio</label>
+    <select class="field-select" id="faturamento">
+      <option value="" disabled selected>Selecione a faixa</option>
+      <option>Até R$ 100 mil</option>
+      <option>R$ 100 mil – R$ 500 mil</option>
+      <option>R$ 500 mil – R$ 2 milhões</option>
+      <option>Acima de R$ 2 milhões</option>
+    </select>
+  </div>
+
+  <div class="nav-row" id="navRow">
+    <button class="btn-back" id="btnBack" onclick="goBack()" style="visibility:hidden">← Voltar</button>
+    <button class="btn-next" id="btnNext" onclick="goNext()">Próxima →</button>
+  </div>
+</div>
+
+<!-- TELA FINAL -->
+<div class="final-screen" id="finalScreen">
+  <div class="final-icon">✓</div>
+  <h2>Raio-X concluído.</h2>
+  <p>Identificamos os pontos críticos da sua operação financeira. Veja um resumo abaixo — nossa equipe entrará em contato por WhatsApp em até <strong style="color:var(--gold)">2 horas úteis</strong> com a análise completa e um convite para conversar.</p>
+
+  <div class="result-areas" id="resultAreas"></div>
+
+  <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1.5rem;">Prefere iniciar a conversa agora?</p>
+  <a class="whatsapp-btn" id="waBtn" href="#" target="_blank">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Falar agora no WhatsApp
+  </a>
+</div>
+
+<script>
+const TOTAL = 7;
+let current = 1;
+const answers = {};
+const scores = { pagamentos: 0, conciliacao: 0, fluxo: 0, relatorios: 0, equipe: 0 };
+const areaMap = { 1:'pagamentos', 2:'conciliacao', 3:'fluxo', 4:'relatorios', 5:'equipe' };
+const areaNames = {
+  pagamentos: 'Pagamentos & Contas',
+  conciliacao: 'Conciliação Bancária',
+  fluxo: 'Fluxo de Caixa',
+  relatorios: 'Relatórios & DRE'
+};
+
+function startForm() {
+  document.getElementById('introBlock').style.display = 'none';
+  const fb = document.getElementById('formBlock');
+  fb.style.display = 'flex';
+  updateProgress();
+}
+
+function selectOpt(el, qNum, letter, score, level) {
+  document.getElementById('opts'+qNum).querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  answers['q'+qNum] = { letter, score, level };
+  if (areaMap[qNum]) scores[areaMap[qNum]] = score;
+}
+
+function updateProgress() {
+  const pct = ((current-1)/TOTAL)*100;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = 'Pergunta ' + current + ' de ' + TOTAL;
+  document.getElementById('progressCount').textContent = current + ' / ' + TOTAL;
+  document.getElementById('btnBack').style.visibility = current > 1 ? 'visible' : 'hidden';
+  document.getElementById('btnNext').textContent = current === TOTAL ? 'Ver meu diagnóstico →' : 'Próxima →';
+}
+
+function showScreen(n) {
+  document.querySelectorAll('.card.screen').forEach(c => c.classList.remove('active'));
+  const el = document.getElementById('q'+n);
+  if (el) el.classList.add('active');
+}
+
+function goNext() {
+  // validação
+  if (current <= 5) {
+    if (!answers['q'+current]) { shake(); return; }
+  }
+  if (current === 6) {
+    const v = document.getElementById('dor_livre').value.trim();
+    if (!v) { shake(); return; }
+    answers.q6 = v;
+  }
+  if (current === 7) {
+    const nome = document.getElementById('nome').value.trim();
+    const wpp = document.getElementById('whatsapp').value.trim();
+    const empresa = document.getElementById('empresa').value.trim();
+    if (!nome || !wpp || !empresa) { shake(); return; }
+    answers.contato = { nome, empresa, whatsapp: wpp, setor: document.getElementById('setor').value, faturamento: document.getElementById('faturamento').value };
+    showResult();
+    return;
+  }
+  current++;
+  showScreen(current);
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack() {
+  if (current <= 1) return;
+  current--;
+  showScreen(current);
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function shake() {
+  const btn = document.getElementById('btnNext');
+  btn.style.transform = 'translateX(-6px)';
+  setTimeout(()=>btn.style.transform='translateX(6px)',100);
+  setTimeout(()=>btn.style.transform='translateX(0)',200);
+  btn.style.background = '#e05252';
+  setTimeout(()=>btn.style.background='var(--gold)',400);
+}
+
+function getStatus(score) {
+  if (score >= 3) return 'bom';
+  if (score === 2) return 'alerta';
+  return 'crítico';
+}
+function getStatusLabel(s) {
+  if (s==='bom') return '✓ Bem estruturado';
+  if (s==='alerta') return '⚠ Precisa de atenção';
+  return '✕ Ponto crítico';
+}
+function getBarWidth(score) {
+  return ({ 3: '85', 2: '45', 1: '15' }[score] || '15') + '%';
+}
+
+function showResult() {
+  document.getElementById('formBlock').style.display = 'none';
+  document.getElementById('progressFill').style.width = '100%';
+  const final = document.getElementById('finalScreen');
+  final.classList.add('active');
+
+  const container = document.getElementById('resultAreas');
+  container.innerHTML = '';
+  Object.entries(areaNames).forEach(([key, name]) => {
+    const sc = scores[key];
+    const st = getStatus(sc);
+    container.innerHTML += `
+      <div class="area-card">
+        <div class="area-card-title">${name}</div>
+        <div class="area-card-status ${st}">${getStatusLabel(st)}</div>
+        <div class="area-card-bar"><div class="area-card-fill ${st}" style="width:${getBarWidth(sc)}"></div></div>
+      </div>`;
+  });
+
+  // montar mensagem WA
+  const c = answers.contato;
+  const linhas = Object.entries(areaNames).map(([k,n]) => {
+    const s = getStatus(scores[k]);
+    const emoji = s==='bom'?'✅':s==='alerta'?'⚠️':'🔴';
+    return `${emoji} *${n}*: ${getStatusLabel(s)}`;
+  }).join('\n');
+  const msg = encodeURIComponent(
+    `Olá! Acabei de preencher o Raio-X Financeiro da Basilio.\n\n` +
+    `*${c.nome}* — ${c.empresa}\n` +
+    `Setor: ${c.setor || 'Não informado'} | Faturamento: ${c.faturamento || 'Não informado'}\n\n` +
+    `📊 *Meu diagnóstico:*\n${linhas}\n\n` +
+    `💬 *Maior dor:* ${answers.q6}\n\n` +
+    `Gostaria de entender melhor como a Basilio pode me ajudar.`
+  );
+  document.getElementById('waBtn').href = `https://wa.me/5584998428598?text=${msg}`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  console.log('Respostas completas:', answers, 'Scores:', scores);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    document.querySelectorAll('.va-fill').forEach(function(el, i) {
+      setTimeout(function() { el.classList.add('visible'); }, i * 180);
+    });
+  }, 600);
+});
+</script>
+</body>
+</html>
